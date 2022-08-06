@@ -1,0 +1,15 @@
+service: authorizer
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ap-northeast-2
+
+functions:
+  authorizer:
+    handler: app.handler
+
+plugins:
+  - serverless-ignore
+  - serverless-dotenv-plugin

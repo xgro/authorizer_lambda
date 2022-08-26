@@ -1,92 +1,69 @@
-<!--
-title: 'AWS Simple HTTP Endpoint example in NodeJS'
-description: 'This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: nodeJS
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# Lambda Authorizer
 
-# Serverless Framework Node HTTP API on AWS
+이 함수는 AWS APIGateway 권한부여자의 역할을 하는 Lambda 함수를 Serveless Framework를 통해 배포하고, Lambda 함수에서 사용할 환경변수를 설정하는 방법을 설명합니다.
 
-This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.
+람다 권한부여자 관련 자세한 설명은 다음 링크를 참조바랍니다.  
+https://velog.io/@xgro/Lambda-Authorizer
 
-This template does not include any kind of persistence (database). For more advanced examples, check out the [serverless/examples repository](https://github.com/serverless/examples/) which includes Typescript, Mongo, DynamoDB and other examples.
+<br>
 
-## Usage
+> `Important`   
+ 이 애플리케이션은 다양한 AWS 서비스를 사용하며 프리 티어 사용 후 이러한 서비스와 관련된 비용이 있습니다. 자세한 내용은 [AWS 요금 페이지](https://aws.amazon.com/pricing/)를 참조하십시오. 발생한 모든 AWS 비용은 귀하가 책임져야 합니다. 이 예에서는 어떠한 보증도 의미하지 않습니다.
 
-### Deployment
+## Requirements
 
-```
-$ serverless deploy
-```
+- Serveless framework 
+  - Framework Core: 3.19.0
+  - Plugin: 6.2.2
+  - SDK: 4.3.2
 
-After deploying, you should see output similar to:
+## Deployment Instructions
 
-```bash
-Deploying aws-node-http-api-project to stage dev (us-east-1)
+1. 프로젝트를 위한 새 경로를 생성하고, GitHub 리포지토리를 복제합니다.
+    ``` 
+    git clone https://github.com/xgro/authorizer_lambda.git
+    ```
+1. 프로젝트 내부의 /src 경로로 이동합니다.
+    ```
+    cd src
+    ```
+2. 의존성 패키지를 설치합니다.
+    ```
+    npm install
+    ```
+1. serverless 배포합니다.
+    ```
+    serverless deploy
+    ```
+1. 배포 후 다음과 유사한 출력이 표시되어야 합니다.
+    ```
+    Running "serverless" from node_modules
+    DOTENV: Loading environment variables from .env:
+            - JWT_SECRET
 
-✔ Service deployed to stack aws-node-http-api-project-dev (152s)
+    Deploying authorizer to stage dev (ap-northeast-2)
+    SERVERLESS-IGNORE: Loaded .slsignore
+            - .env
 
-endpoint: GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/
-functions:
-  hello: aws-node-http-api-project-dev-hello (1.9 kB)
-```
+    ✔ Service deployed to stack authorizer-dev (108s)
 
-_Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [http event docs](https://www.serverless.com/framework/docs/providers/aws/events/apigateway/).
+    functions:
+      authorizer: authorizer-dev-authorizer (296 kB)
+    ```
 
-### Invocation
+## How it works
 
-After successful deployment, you can call the created application via HTTP:
+Lambda Authorizer는 `serverless framework`를 사용하여 배포하며, 프론트엔드 및 백엔드 개발자가 애플리케이션을 빠르게 개발 할 수 있도록 합니다. 
 
-```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
-```
+`.env.sample`의 내용을 참조하여 `JWT_SECRET`의 값을 지정하여 API Gateway의 권한부여자로 사용합니다.
 
-Which should result in response similar to the following (removed `input` content for brevity):
+> `serverless-dotenv-plugin`을 통해 `serverless framework`는 .env 파일의 내용을 참조하게 됩니다.
 
-```json
-{
-  "message": "Go Serverless v2.0! Your function executed successfully!",
-  "input": {
-    ...
-  }
-}
-```
+> `serverless-ignore`을 통해 `serverless framework`는 .env 파일을 배포시 파일을 포함하지 않습니다.
 
-### Local development
-
-You can invoke your function locally by using the following command:
-
-```bash
-serverless invoke local --function hello
-```
-
-Which should result in response similar to the following:
-
-```
-{
-  "statusCode": 200,
-  "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": \"\"\n}"
-}
-```
-
-
-Alternatively, it is also possible to emulate API Gateway and Lambda locally by using `serverless-offline` plugin. In order to do that, execute the following command:
-
-```bash
-serverless plugin install -n serverless-offline
-```
-
-It will add the `serverless-offline` plugin to `devDependencies` in `package.json` file as well as will add it to `plugins` in `serverless.yml`.
-
-After installation, you can start local emulation with:
-
-```
-serverless offline
-```
-
-To learn more about the capabilities of `serverless-offline`, please refer to its [GitHub repository](https://github.com/dherault/serverless-offline).
+## Cleanup
+ 
+Delete the stack   
+  ```bash
+  serverless remove
+  ```

@@ -1,0 +1,34 @@
+service: authorizer
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  httpApi:
+    authorizers:
+      customAuthorizer:
+        type: request
+        functionName: authorizerFunc
+
+functions:
+  hello:
+    handler: hello.handler
+    events:
+      - httpApi:
+          method: get
+          path: /
+          authorizer:
+            name: customAuthorizer
+
+  login:
+    handler: fake.handler
+    events:
+      - httpApi:
+          method: post
+          path: /
+
+  authorizerFunc:
+    handler: app.handler
+
+plugins:
+  - serverless-ignore
+  - serverless-dotenv-plugin

@@ -61,18 +61,16 @@ Lambda Authorizer는 `serverless framework`를 사용하여 배포하며, 프론
 
 > `serverless-ignore`을 통해 `serverless framework`는 .env 파일을 배포시 파일을 포함하지 않습니다.
 
+<br>
 
 ## Testing
 이 함수를 테스트하기 위해서는 example 파일을 참조하여 주시기 바랍니다.
 
 example 경로에서 `serverless deploy`로 테스트 환경을 빠르게 구축할 수 있습니다. 
 
-<br>
-
 ### 토큰 발행을 위한 요청
 `/POST`
 ```
-  # 
   # payload 
   {
     "loginname": "김코딩",
@@ -83,6 +81,7 @@ example 경로에서 `serverless deploy`로 테스트 환경을 빠르게 구축
 ### 권한부여자 동작 확인
 `/GET` 
 ```
+  # header
   Authorization: Bearer {TOKEN}
 ```
 

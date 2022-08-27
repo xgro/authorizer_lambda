@@ -57,9 +57,15 @@ Lambda Authorizer는 `serverless framework`를 사용하여 배포하며, 프론
 
 `.env.sample`의 내용을 참조하여 `JWT_SECRET`의 값을 지정하여 API Gateway의 권한부여자로 사용합니다.
 
-> `serverless-dotenv-plugin`을 통해 `serverless framework`는 .env 파일의 내용을 참조하게 됩니다.
+<br>
 
-> `serverless-ignore`을 통해 `serverless framework`는 .env 파일을 배포시 파일을 포함하지 않습니다.
+> **serverless framework plugin**
+>  
+> `serverless-dotenv-plugin`:  
+>  프로젝트 배포시 .env 파일의 내용을 참조하여 lambda 환경변수로 합니다.
+>   
+> `serverless-ignore`:    
+>  프로젝트 배포시 .env 파일을 아티팩트로 포함하지 않습니다.
 
 <br>
 

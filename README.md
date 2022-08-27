@@ -23,9 +23,9 @@ https://velog.io/@xgro/Lambda-Authorizer
     ``` 
     git clone https://github.com/xgro/authorizer_lambda.git
     ```
-1. 프로젝트 내부의 /src 경로로 이동합니다.
+1. 프로젝트 내부의 src/ 경로로 이동합니다.
     ```
-    cd src
+    cd src/
     ```
 2. 의존성 패키지를 설치합니다.
     ```

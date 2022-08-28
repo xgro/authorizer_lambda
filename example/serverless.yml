@@ -3,15 +3,26 @@ frameworkVersion: '3'
 
 provider:
   name: aws
+  runtime: nodejs14.x
+  region: ap-northeast-2
   httpApi:
     authorizers:
       customAuthorizer:
         type: request
         functionName: authorizerFunc
 
+package:
+  individually: true
+
 functions:
   hello:
-    handler: hello.handler
+    handler: handlers/hello.handler
+    package:
+      patterns:
+        - "!handlers/**"
+        - "handlers/hello.js"
+        - "!node_modules/**"
+        - "!package**"
     events:
       - httpApi:
           method: get
@@ -20,14 +31,22 @@ functions:
             name: customAuthorizer
 
   login:
-    handler: fake.handler
+    handler: handlers/login.handler
+    package:
+      patterns:
+        - "!handlers/**"
+        - "handlers/login.js"
     events:
       - httpApi:
           method: post
           path: /
 
   authorizerFunc:
-    handler: app.handler
+    handler: handlers/auth.handler
+    package:
+      patterns:
+        - "!handlers/**"
+        - "handlers/auth.js"
 
 plugins:
   - serverless-ignore

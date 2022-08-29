@@ -102,7 +102,6 @@ example 경로에서 `serverless deploy`로 테스트 환경을 빠르게 구축
 ### 토큰 발행을 위한 요청
 `/POST`
 ```
-  # 
   # payload 
   {
     "loginname": "김코딩",
@@ -113,6 +112,7 @@ example 경로에서 `serverless deploy`로 테스트 환경을 빠르게 구축
 ### 권한부여자 동작 확인
 `/GET` 
 ```
+  # header
   Authorization: Bearer {TOKEN}
 ```
 
